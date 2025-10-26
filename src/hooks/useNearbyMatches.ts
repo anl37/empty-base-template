@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { GeolocationData } from './useGeolocation';
-import { distanceMeters, generatePairId, getGeohashNeighbors } from '@/lib/geo';
+import { distanceMeters, generatePairId, getGeohashNeighbors, toGeohash } from '@/lib/geo';
 import { getCommonInterests } from '@/config/interests';
 import { FEATURE_FLAGS } from '@/config/featureFlags';
 
@@ -112,9 +112,9 @@ export const useNearbyMatches = ({ location, enabled }: UseNearbyMatchesOptions)
 
     setLoading(true);
     try {
-      // Get geohash neighbors for bbox query
-      const { geohash } = location as any;
-      const neighbors = geohash ? getGeohashNeighbors(geohash.substring(0, 6)) : [];
+      // Calculate geohash from current location coordinates
+      const myGeohash = toGeohash(location.lat, location.lng);
+      const neighbors = getGeohashNeighbors(myGeohash.substring(0, 6));
 
       // Query profiles with nearby geohash
       const { data: profiles, error } = await supabase
@@ -123,7 +123,7 @@ export const useNearbyMatches = ({ location, enabled }: UseNearbyMatchesOptions)
         .neq('id', user.id) // Exclude self
         .eq('is_visible', true)
         .eq('onboarded', true)
-        .in('geohash', neighbors.length > 0 ? neighbors : ['__none__']); // Fallback to impossible value
+        .in('geohash', neighbors);
 
       if (error) {
         console.error('[Nearby] Query error:', error);
