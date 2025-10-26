@@ -25,15 +25,15 @@ export const FEATURE_FLAGS = {
   
   /**
    * Geohash precision level (1-12)
-   * 7 = ~150m squares (good for ~10-15m proximity matching)
+   * 6 = ~1.2km squares (good for ~100m proximity matching)
    */
-  geohashPrecision: 7,
+  geohashPrecision: 6,
   
   /**
    * Maximum distance in meters to consider a match
-   * Default: 15m (~50 feet)
+   * Default: 100m (~330 feet)
    */
-  maxMatchDistanceMeters: 15,
+  maxMatchDistanceMeters: 100,
   
   /**
    * Throttle settings for location updates

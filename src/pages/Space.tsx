@@ -300,7 +300,7 @@ const Space = () => {
                 <div className="w-3 h-3 rounded-full bg-success animate-pulse shadow-glow" />
                 <div className="flex-1">
                   <p className="font-semibold text-foreground">You're here</p>
-                  <p className="text-sm text-muted-foreground">People within 10 m can see you</p>
+                  <p className="text-sm text-muted-foreground">People within 100 m can see you</p>
                 </div>
               </div>
             </div>
@@ -365,7 +365,7 @@ const Space = () => {
               <p className="text-sm text-muted-foreground max-w-xs mx-auto">
                 {matchingLoading 
                   ? "Searching for people nearby..."
-                  : "Be the first! Others within 15m who share your interests will appear here."
+                  : "Be the first! Others within 100m who share your interests will appear here."
                 }
               </p>
             </div>

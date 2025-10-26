@@ -26,7 +26,7 @@ interface UseNearbyMatchesOptions {
 /**
  * Hook to find and match with nearby users
  * - Queries by geohash for efficiency
- * - Filters by distance (≤15m default)
+ * - Filters by distance (≤100m default)
  * - Requires ≥1 shared interest
  * - Auto-creates matches when criteria met
  */
@@ -112,8 +112,8 @@ export const useNearbyMatches = ({ location, enabled }: UseNearbyMatchesOptions)
 
     setLoading(true);
     try {
-      // Calculate geohash from current location coordinates (use full precision for matching)
-      const myGeohash = toGeohash(location.lat, location.lng);
+      // Calculate geohash from current location coordinates (use precision 6 for 100m matching)
+      const myGeohash = toGeohash(location.lat, location.lng, 6);
       const neighbors = getGeohashNeighbors(myGeohash);
 
       // Query profiles with nearby geohash
