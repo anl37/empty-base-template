@@ -112,9 +112,9 @@ export const useNearbyMatches = ({ location, enabled }: UseNearbyMatchesOptions)
 
     setLoading(true);
     try {
-      // Calculate geohash from current location coordinates
+      // Calculate geohash from current location coordinates (use full precision for matching)
       const myGeohash = toGeohash(location.lat, location.lng);
-      const neighbors = getGeohashNeighbors(myGeohash.substring(0, 6));
+      const neighbors = getGeohashNeighbors(myGeohash);
 
       // Query profiles with nearby geohash
       const { data: profiles, error } = await supabase
